@@ -27,7 +27,9 @@ public class Teacher {
     private List<Course> courseList = new ArrayList<>();
 
     // Additional fields you should consider:
-    @Column(nullable = false, length = 100)
+    @Column(
+//            nullable = false,
+            length = 100)
     private String fullName;
 
     @Column(length = 15)

@@ -27,7 +27,9 @@ public class Student {
     private List<Enrolement> enrolementList = new ArrayList<>();
 
     // Additional fields you might want:
-    @Column(nullable = false, length = 100)
+    @Column(
+//            nullable = false,
+            length = 100)
     private String fullName;
 
     @Column(length = 15)

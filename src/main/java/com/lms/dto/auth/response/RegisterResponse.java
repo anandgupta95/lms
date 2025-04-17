@@ -1,7 +1,3 @@
-//package com.lms.dto.auth.response;
-//
-//public class RegisterResponse {
-//}
 
 package com.lms.dto.auth.response;
 

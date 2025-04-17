@@ -1,31 +1,60 @@
-
 package com.lms.mapper;
 
-import com.lms.dto.student.request.UserRequestDTO;
-import com.lms.dto.student.response.UserResponseDTO;
+
+import com.lms.dto.auth.request.LoginRequest;
+import com.lms.dto.auth.request.RegisterRequest;
+import com.lms.dto.auth.response.LoginResponse;
+import com.lms.dto.auth.response.RegisterResponse;
 import com.lms.model.Auth;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Component;
 
 @Component
 public class AuthMapper {
-    public UserResponseDTO toResponseDto(Auth user) {
-        if (user == null) return null;
-        UserResponseDTO dto = new UserResponseDTO();
-        dto.setId(user.getId());
-        dto.setFirstName(user.getFirstName());
-        dto.setLastName(user.getLastName());
-        dto.setRole(user.getRole());
-        return dto;
+    //for registration
+    public Auth toEntity(RegisterRequest dto){
+
+        if(dto == null) return  null;
+
+       Auth auth = new Auth();
+       auth.setEmail(dto.getEmail());
+       auth.setUsername(dto.getEmail().split("@")[0]);  // for now i am using email id as user name but after i will generate unique username
+       auth.setPassword(BCrypt.hashpw(dto.getPassword(), BCrypt.gensalt()));
+       auth.setRole(Auth.Role.valueOf(dto.getRole().toUpperCase()));
+       return auth;
+
     }
 
-    public Auth toEntity(UserRequestDTO dto) {
-        if (dto == null) return null;
-        Auth user = new Auth();
-        user.setFirstName(dto.getFirstName());
-        user.setLastName(dto.getLastName());
-        user.setRole(dto.getRole());
-        return user;
+    public RegisterResponse toRegisterResponseDto(Auth auth){
+        if( auth == null) return null;
+
+        RegisterResponse registerResponse = new RegisterResponse();
+        registerResponse.setId(auth.getId());
+        registerResponse.setUsername(auth.getUsername());
+        registerResponse.setEmail(auth.getEmail());
+        registerResponse.setMessage("User registered successfully!");
+        return registerResponse;
     }
+
+    //for login
+
+//    public Auth toEntity(LoginRequest loginRequest){
+//        if(loginRequest == null ) return null;
+//        Auth auth = new Auth();
+//        auth.setEmail(loginRequest.getUserOrEmail());
+//        auth.setPassword(loginRequest.getPassword());
+//        return auth;
+//    }
+
+    public LoginResponse toLoginResponseDto(Auth auth, String accesstoken){
+        if(auth == null) return  null;
+        LoginResponse loginResponse = new LoginResponse();
+        loginResponse.setId(auth.getId());
+        loginResponse.setUsername(auth.getUsername());
+        loginResponse.setToken(accesstoken);
+        return loginResponse;
+
+    }
+
 
 }
-

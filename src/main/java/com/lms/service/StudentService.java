@@ -1,9 +1,9 @@
 package com.lms.service;
 
 import com.lms.model.Student;
-import com.lms.model.User;
+import com.lms.model.Auth;
 import com.lms.repository.StudentRepository;
-import com.lms.repository.UserRepository;
+import com.lms.repository.AuthRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -11,19 +11,19 @@ import java.util.List;
 
 @Service
 public class StudentService {
-    UserRepository userRepository;
+    AuthRepository AuthRepository;
     StudentRepository studentRepository;
 
-    public StudentService(UserRepository userRepository,StudentRepository studentRepository){
-        this.userRepository = userRepository;
+    public StudentService(AuthRepository AuthRepository,StudentRepository studentRepository){
+        this.AuthRepository = AuthRepository;
         this.studentRepository = studentRepository;
     }
 
-    public Student createStudent(Long userId, Student student){
-        User userStudent = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("No User Found using this "+userId));
+    public Student createStudent(Long AuthId, Student student){
+        Auth authStudent = AuthRepository.findById(AuthId).orElseThrow(() -> new EntityNotFoundException("No Auth Found using this "+AuthId));
 
-        if(!"STUDENT".equals(userStudent.getRole().name())){
-            throw new IllegalArgumentException("Permission denied for creating student using this id : "+userId);
+        if(!"STUDENT".equals(authStudent.getRole().name())){
+            throw new IllegalArgumentException("Permission denied for creating student using this id : "+AuthId);
         }
         else{
             return studentRepository.save(student);

@@ -1,9 +1,9 @@
 package com.lms.service;
 
 import com.lms.model.Teacher;
-import com.lms.model.User;
+import com.lms.model.Auth;
 import com.lms.repository.TeacherRepository;
-import com.lms.repository.UserRepository;
+import com.lms.repository.AuthRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
@@ -14,18 +14,18 @@ import java.util.List;
 public class TeacherService {
 
     TeacherRepository teacherRepository;
-    UserRepository userRepository;
+    AuthRepository AuthRepository;
 
-    public TeacherService(TeacherRepository teacherRepository, UserRepository userRepository){
+    public TeacherService(TeacherRepository teacherRepository, AuthRepository AuthRepository){
         this.teacherRepository = teacherRepository;
-        this.userRepository = userRepository;
+        this.AuthRepository = AuthRepository;
     }
 
-    public Teacher createTeacher(long userId, Teacher teacher) throws BadRequestException {
-        User userteacher =userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("No User found with this id : "+ userId));
+    public Teacher createTeacher(long AuthId, Teacher teacher) throws BadRequestException {
+        Auth Authteacher =AuthRepository.findById(AuthId).orElseThrow(() -> new EntityNotFoundException("No Auth found with this id : "+ AuthId));
 
-        if(!("TEACHER".equals(userteacher.getRole().name()))){
-            throw new BadRequestException("user has not permission for teacher as role defined as ."+userteacher.getRole()+".");
+        if(!("TEACHER".equals(Authteacher.getRole().name()))){
+            throw new BadRequestException("Auth has not permission for teacher as role defined as ."+Authteacher.getRole()+".");
         }
 
         else{

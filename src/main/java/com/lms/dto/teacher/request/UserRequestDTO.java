@@ -1,7 +1,3 @@
-//package com.lms.dto.user.request;
-//
-//public class UserRequestDTO {
-//}
 
 package com.lms.dto.teacher.request;
 
