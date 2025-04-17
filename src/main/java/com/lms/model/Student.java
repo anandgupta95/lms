@@ -35,6 +35,7 @@ public class Student {
     @Column(length = 15)
     private String phoneNumber;
 
+
     @Column(length = 200)
     private String address;
 

@@ -56,5 +56,7 @@ public class AuthMapper {
 
     }
 
+    // for response user (auth)
+//    public UserResponse toUser
 
 }
