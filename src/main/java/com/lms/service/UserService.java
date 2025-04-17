@@ -51,8 +51,18 @@ public class UserService {
     public UpdateProfile updateProfile(Long id, UpdateProfile updateProfile) {
         Student student = new Student();
         Teacher teacher = new Teacher();
+        if(authRepository.countByUsernameNative(updateProfile.getUsername())>1){
+            throw new RuntimeException("Username is already used by someone else please try with another email ");
+        }
+        if(authRepository.countByEmailNative(updateProfile.getEmail())>1){
+            throw new RuntimeException("email is already used by someone else please try with another email ");
+        }
+
+       authRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("No User found with id: " + id));
         Auth user = authRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("No User found with id: " + id));
+
         profileMapper.toAuthEntity(updateProfile,user);
         if(user.getRole().name().equals("STUDENT")){
              student = studentRepository.findByAuthId(id).orElseThrow(()-> new RuntimeException("user not found "));
