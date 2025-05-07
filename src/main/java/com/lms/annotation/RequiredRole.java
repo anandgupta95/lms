@@ -1,9 +1,5 @@
 package com.lms.annotation;
 
-
-import com.lms.model.Auth;
-
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

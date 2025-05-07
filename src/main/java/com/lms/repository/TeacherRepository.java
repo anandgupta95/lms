@@ -1,6 +1,5 @@
 package com.lms.repository;
 
-import com.lms.model.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.lms.model.Teacher;
 

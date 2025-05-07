@@ -1,7 +1,7 @@
 package com.lms.mapper;
 
 
-import com.lms.dto.auth.request.LoginRequest;
+
 import com.lms.dto.auth.request.RegisterRequest;
 import com.lms.dto.auth.response.LoginResponse;
 import com.lms.dto.auth.response.RegisterResponse;
