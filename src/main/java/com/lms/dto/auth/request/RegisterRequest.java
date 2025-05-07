@@ -7,8 +7,11 @@ import jakarta.validation.constraints.Size;
 
 public class RegisterRequest {
 
-    @Email(message = "Invalid email format")
     @NotBlank(message = "Email is mandatory")
+    @Pattern(
+            regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$",
+            message = "Invalid email format"
+    )
     private String email;
 
     @NotBlank(message = "Role is mandatory")

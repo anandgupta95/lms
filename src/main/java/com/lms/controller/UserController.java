@@ -19,11 +19,7 @@ public class UserController {
         this.jwtUtil = jwtUtil;
     }
     
-//    @GetMapping
-//    @RequiredRole(User.Role.ADMIN)
-//    public ResponseEntity<?> getAllUsers(){
-//        return ResponseEntity.ok(userService.getUser());
-//    }
+
 
     @GetMapping
     @RequiredRole({"STUDENT","TEACHER"})

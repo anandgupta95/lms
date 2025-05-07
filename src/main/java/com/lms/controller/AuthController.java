@@ -1,13 +1,13 @@
-
 package com.lms.controller;
 
-import com.lms.annotation.RequiredRole;
 import com.lms.dto.auth.request.LoginRequest;
 import com.lms.dto.auth.request.RegisterRequest;
 import com.lms.dto.auth.response.LoginResponse;
 import com.lms.dto.auth.response.RegisterResponse;
+import com.lms.dto.ApiResponse;
 import com.lms.service.AuthService;
-import org.apache.coyote.BadRequestException;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,44 +16,22 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthService authService;
-    public AuthController(AuthService authService){this.authService = authService;}
 
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
 
     @PostMapping("/register")
-    public ResponseEntity<RegisterResponse> register(
-//            @valid
-        @RequestBody RegisterRequest newUser) throws BadRequestException {
+    public ResponseEntity<ApiResponse<RegisterResponse>> register(@Valid @RequestBody RegisterRequest newUser) {
         RegisterResponse response = authService.register(newUser);
-        return ResponseEntity.ok(response);
+        ApiResponse<RegisterResponse> apiResponse = new ApiResponse<>("success", "User registered successfully", response);
+        return new ResponseEntity<>(apiResponse, HttpStatus.CREATED);
     }
+
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(
-//            @valid
-     @RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<ApiResponse<LoginResponse>> login(@Valid @RequestBody LoginRequest loginRequest) {
         LoginResponse response = authService.login(loginRequest);
-        return ResponseEntity.ok(response);
-    }
-
-    @GetMapping("/testing")
-    @RequiredRole({"STUDENT", "TEACHER"})
-    public String getChecking(){
-        return "get is working ";
-    }
-
-    @PostMapping("/testing")
-//    @RequiredRole({"STUDENT", "TEACHER"})
-    public String postChecking(){
-        return "post is working ";
-    }
-    @PutMapping("/testing")
-//    @RequiredRole({"STUDENT", "TEACHER"})
-    public String putChecking(){
-        return "put is working ";
-    }
-    @DeleteMapping("/testing")
-//    @RequiredRole({"STUDENT", "TEACHER"})
-    public String deleteChecking(){
-        return "delete is working ";
+        ApiResponse<LoginResponse> apiResponse = new ApiResponse<>("success", "Login successful", response);
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 }
-

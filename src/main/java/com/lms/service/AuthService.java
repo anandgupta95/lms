@@ -65,7 +65,6 @@ public class AuthService {
     }
 
     public LoginResponse login(LoginRequest loginRequest) {
-
         if ((loginRequest.getEmail() == null || loginRequest.getEmail().isBlank()) &&
                 (loginRequest.getUsername() == null || loginRequest.getUsername().isBlank())) {
             throw new InvalidInputException("Username or Email must be provided");
@@ -95,4 +94,3 @@ public class AuthService {
         return authMapper.toLoginResponseDto(auth, accessToken);
     }
 }
-
