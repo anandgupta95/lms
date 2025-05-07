@@ -1,26 +1,26 @@
-//package com.lms.dto.auth.request;
-//
-//public class LoginRequest {
-//}
-
 package com.lms.dto.auth.request;
-
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 public class LoginRequest {
-//
-//    @Email(message = "Invalid email format")
-//    @NotBlank(message = "Email is mandatory")
+
+    @Email(message = "Invalid email format")
     private String email;
 
-//    @Email(message = "Invalid email format")
-//    @NotBlank(message = "username is mandatory")
     private String username;
 
     @NotBlank(message = "Password is mandatory")
     private String password;
+
+    // Getters and setters
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getUsername() {
         return username;
@@ -28,15 +28,6 @@ public class LoginRequest {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    //     Getters and Setters
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getPassword() {
@@ -47,4 +38,3 @@ public class LoginRequest {
         this.password = password;
     }
 }
-

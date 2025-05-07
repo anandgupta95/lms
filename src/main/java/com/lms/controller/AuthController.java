@@ -1,6 +1,7 @@
 
 package com.lms.controller;
 
+import com.lms.annotation.RequiredRole;
 import com.lms.dto.auth.request.LoginRequest;
 import com.lms.dto.auth.request.RegisterRequest;
 import com.lms.dto.auth.response.LoginResponse;
@@ -15,10 +16,8 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthService authService;
+    public AuthController(AuthService authService){this.authService = authService;}
 
-    public AuthController(AuthService authService){
-        this.authService = authService;
-    }
 
     @PostMapping("/register")
     public ResponseEntity<RegisterResponse> register(
@@ -27,13 +26,34 @@ public class AuthController {
         RegisterResponse response = authService.register(newUser);
         return ResponseEntity.ok(response);
     }
-
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(
 //            @valid
-            @RequestBody LoginRequest loginRequest) {
+     @RequestBody LoginRequest loginRequest) {
         LoginResponse response = authService.login(loginRequest);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/testing")
+    @RequiredRole({"STUDENT", "TEACHER"})
+    public String getChecking(){
+        return "get is working ";
+    }
+
+    @PostMapping("/testing")
+//    @RequiredRole({"STUDENT", "TEACHER"})
+    public String postChecking(){
+        return "post is working ";
+    }
+    @PutMapping("/testing")
+//    @RequiredRole({"STUDENT", "TEACHER"})
+    public String putChecking(){
+        return "put is working ";
+    }
+    @DeleteMapping("/testing")
+//    @RequiredRole({"STUDENT", "TEACHER"})
+    public String deleteChecking(){
+        return "delete is working ";
     }
 }
 

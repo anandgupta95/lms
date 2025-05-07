@@ -31,11 +31,12 @@ private String secret;
     @Value("${jwt.refreshExpiration}")
     private long refreshExpiration;
 
-    public String generateToken(String username, String role, boolean isRefreshToken) {
+    public String generateToken(Long id, String username, String role, boolean isRefreshToken) {
         return Jwts.builder()
                 .subject(username)
                 .issuedAt(new Date())
                 .claim("role", role)
+                .claim("userId", id)
                 .expiration(new Date(System.currentTimeMillis() + (isRefreshToken ? refreshExpiration : jwtExpiration)))
                 .signWith(SECRET_KEY)
                 .compact();
@@ -54,6 +55,11 @@ private String secret;
         return claims.get("role", String.class);
     }
 
+    public  Long extractId(String token) {
+        Claims claims = extractAllClaims(token);
+        return claims.get("userId", Long.class);
+    }
+
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = Jwts.parser()
                 .verifyWith(SECRET_KEY).build()
@@ -62,29 +68,8 @@ private String secret;
         return claimsResolver.apply(claims);
     }
 
-    public boolean validateToken(String token, String username) {
-        return username.equals(extractUsername(token)) && !extractExpiration(token).before(new Date());
-    }
 
 
-
-    public String generatePasswordResetToken(String username) {
-        long resetExpiration = 10 * 60 * 1000; // 10 minutes
-        return Jwts.builder()
-                .subject(username)
-                .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + resetExpiration))
-                .claim("type", "reset")
-                .signWith(SECRET_KEY)
-                .compact();
-    }
-
-    public boolean validateResetToken(String token, String username) {
-        Claims claims = extractAllClaims(token);
-        return username.equals(claims.getSubject()) &&
-                "reset".equals(claims.get("type")) &&
-                !extractExpiration(token).before(new Date());
-    }
 
     private Claims extractAllClaims(String token) {
         return Jwts.parser()

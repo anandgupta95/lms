@@ -22,12 +22,10 @@ public class AuthMapper {
        auth.setPassword(BCrypt.hashpw(dto.getPassword(), BCrypt.gensalt()));
        auth.setRole(Auth.Role.valueOf(dto.getRole().toUpperCase()));
        return auth;
-
     }
 
     public RegisterResponse toRegisterResponseDto(Auth auth){
         if( auth == null) return null;
-
         RegisterResponse registerResponse = new RegisterResponse();
         registerResponse.setId(auth.getId());
         registerResponse.setUsername(auth.getUsername());
@@ -36,15 +34,6 @@ public class AuthMapper {
         return registerResponse;
     }
 
-    //for login
-
-//    public Auth toEntity(LoginRequest loginRequest){
-//        if(loginRequest == null ) return null;
-//        Auth auth = new Auth();
-//        auth.setEmail(loginRequest.getUserOrEmail());
-//        auth.setPassword(loginRequest.getPassword());
-//        return auth;
-//    }
 
     public LoginResponse toLoginResponseDto(Auth auth, String accesstoken){
         if(auth == null) return  null;
@@ -55,8 +44,5 @@ public class AuthMapper {
         return loginResponse;
 
     }
-
-    // for response user (auth)
-//    public UserResponse toUser
 
 }

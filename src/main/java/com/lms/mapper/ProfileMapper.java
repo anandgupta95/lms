@@ -1,6 +1,6 @@
 package com.lms.mapper;
 
-import com.lms.dto.profile.UpdateProfile;
+import com.lms.dto.user.UpdateProfile;
 import com.lms.model.Auth;
 import com.lms.model.Student;
 import com.lms.model.Teacher;

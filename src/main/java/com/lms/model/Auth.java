@@ -1,6 +1,7 @@
 package com.lms.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -48,10 +49,12 @@ public class Auth {
     private LocalDateTime updatedAt;
 
     @OneToOne(mappedBy = "auth", cascade = CascadeType.ALL)
-    @JsonIgnore
+//    @JsonIgnore
+    @JsonManagedReference
     private Student student;
 
     @OneToOne(mappedBy = "auth", cascade = CascadeType.ALL)
-    @JsonIgnore
+//    @JsonIgnore
+    @JsonManagedReference
     private Teacher teacher;
 }

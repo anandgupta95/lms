@@ -4,7 +4,6 @@ package com.lms.filter;
 import com.lms.util.JwtUtil;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Component;
 import java.io.IOException;
 
@@ -28,7 +27,9 @@ public class JwtFilter implements Filter {
             // Extract info from token (assuming you decode and verify here).
 
             String userRole = jwtUtil.extractRole(token);
+            Long userId = jwtUtil.extractId(token);
             httpRequest.setAttribute("userRole", userRole);
+            httpRequest.setAttribute("userId", userId);
         }
 
         chain.doFilter(request, response);

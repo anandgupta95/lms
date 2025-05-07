@@ -1,9 +1,9 @@
-
 package com.lms.dto.auth.request;
-
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 public class RegisterRequest {
 
@@ -11,12 +11,15 @@ public class RegisterRequest {
     @NotBlank(message = "Email is mandatory")
     private String email;
 
+    @NotBlank(message = "Role is mandatory")
+    @Pattern(regexp = "^(STUDENT|TEACHER|ADMIN)$", message = "Role must be STUDENT, TEACHER, or ADMIN")
     private String role;
 
     @NotBlank(message = "Password is mandatory")
+    @Size(min = 6, max = 20, message = "Password must be between 6 and 20 characters")
     private String password;
 
-    // Add other fields like fullName, phone, etc if needed.
+    // Optionally, you could add more fields like fullName, phone, etc. with validations
 
     // Getters and Setters
     public String getEmail() {
@@ -43,4 +46,3 @@ public class RegisterRequest {
         this.password = password;
     }
 }
-

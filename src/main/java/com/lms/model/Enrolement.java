@@ -1,5 +1,7 @@
 package com.lms.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,13 +22,18 @@ public class Enrolement {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "student_id", nullable = false)
+    @JsonBackReference
     private Student student;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "course_id", nullable = false)
+    @JsonBackReference
     private Course course;
 
     @Column(nullable = false, updatable = false)
-    private LocalDateTime enrolledAt = LocalDateTime.now();
+    private LocalDateTime enrollmentDate = LocalDateTime.now();
+
+    private LocalDateTime expiryDate;
+
 
 }

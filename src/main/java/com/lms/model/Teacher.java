@@ -1,5 +1,7 @@
 package com.lms.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,9 +23,11 @@ public class Teacher {
 
     @OneToOne
     @JoinColumn(name = "auth_id", nullable = false, unique = true)
+    @JsonBackReference
     private Auth auth;
 
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Course> courseList = new ArrayList<>();
 
     // Additional fields you should consider:
